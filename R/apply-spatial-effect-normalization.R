@@ -11,18 +11,20 @@
 #' @md
 #' @export
 
-apply_spatial_effect_normalization <- function(sm_data, death_thresh = 0.25, ...) {
+apply_spatial_effect_normalization <- function(sm_data, to, death_thresh = 0.25, ...) {
 
   assertthat::assert_that(assertthat::is.number(death_thresh))
+
+  sm_data$to_temporary <- sm_data[[to]]
 
   sm_data %>%
     group_by(plate_id) %>%
     mutate(
-      size_plate_norm = size / mean(size[plate_control], trim = 0.2),
+      size_plate_norm = to_temporary / mean(to_temporary[plate_control], trim = 0.2),
       spatial_effect  = spatial_effect_loess(colony_row, colony_col, size_plate_norm, plate_control, value_thresh = death_thresh, ...),
-      size_spatial_norm = size / spatial_effect
+      size_spatial_norm = to_temporary / spatial_effect
     ) %>%
-    select(-size_plate_norm) %>%
+    select(-size_plate_norm, -to_temporary) %>%
     ungroup()
 }
 
