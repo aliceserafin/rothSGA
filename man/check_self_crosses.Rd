@@ -10,11 +10,10 @@ check_self_crosses(dir, untreated = "CisPt-0uM")
 \arguments{
 \item{dir}{A directory containing the screenmill data}
 
-\item{untreated}{The name of the untreated condition under the column treatment_id (see \link[screenmill:read_screenmill]{screenmill::read_screenmill}) (as a string)}
+\item{untreated}{The name of the untreated condition under the column treatment_id, default is 'CisPt-0uM' (see \link[screenmill:read_screenmill]{screenmill::read_screenmill}) (as a string)}
 }
 \description{
-Adds WARNING_self_crossing as a logical variable in a screenmill dataset and creates 'WARNING_self_crossing.csv'
-as an easy to read automated report of the problematic crosses.
+creates 'WARNING_self_crossing.csv' as an easy to read automated report of the problematic crosses.
 }
 \details{
 This will only be applied to the untreated plates.
