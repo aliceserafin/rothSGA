@@ -3,7 +3,7 @@
 #'
 #' @param sm_data A screenmill dataset (see [screenmill::read_screenmill])
 #' @param path where the figures will be generated. A figures directory will be created.
-#' @param normalized Logical. Has the data been spatially and plate normalized ? default is TRUE (see[rothSGA::apply_spatial_effect_normalization] and [rothSGA::apply_plate_normalization])
+#' @param normalized Logical. Has the data been spatially and plate normalized ? default is normalized = TRUE (see[rothSGA::apply_spatial_effect_normalization] and [rothSGA::apply_plate_normalization])
 #'
 #' @md
 #' @export

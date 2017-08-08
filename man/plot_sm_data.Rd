@@ -9,7 +9,7 @@ plot_sm_data(sm_data, normalized = TRUE, path)
 \arguments{
 \item{sm_data}{A screenmill dataset (see \link[screenmill:read_screenmill]{screenmill::read_screenmill})}
 
-\item{normalized}{Logical. Has the data been spatially and plate normalized ? default is TRUE (see\link[rothSGA:apply_spatial_effect_normalization]{rothSGA::apply_spatial_effect_normalization} and \link[rothSGA:apply_plate_normalization]{rothSGA::apply_plate_normalization})}
+\item{normalized}{Logical. Has the data been spatially and plate normalized ? default is normalized = TRUE (see\link[rothSGA:apply_spatial_effect_normalization]{rothSGA::apply_spatial_effect_normalization} and \link[rothSGA:apply_plate_normalization]{rothSGA::apply_plate_normalization})}
 
 \item{path}{where the figures will be generated. A figures directory will be created.}
 }
