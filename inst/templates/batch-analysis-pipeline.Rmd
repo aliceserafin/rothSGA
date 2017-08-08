@@ -1,0 +1,51 @@
+---
+title: "Batch report"
+author: "{{{ author }}}"
+date: "{{{ date }}}"
+output: html_document
+---
+
+## Setup
+
+```{r}
+library(rothSGA)
+dir = '{{{ data_dir }}}'
+```
+
+## Annotate Images
+
+```{r}
+screenmill::annotate(dir)
+add_biological_replicates(dir)
+```
+
+## Calibrate, review, and quantify colonies
+
+```{r}
+screenmill::calibrate(dir)
+screenmill::review(dir)
+screenmill::measure(dir)
+```
+
+## Apply normalizations
+
+```{r}
+screenmill::read_screenmill(dir) %>%
+  apply_spatial_effect_normalization() %>%
+  apply_plate_normalization()
+```
+
+## Aggregate and summarise technical replicates
+
+```{r}
+summarize_normalized_data()
+```
+
+## Quality control
+
+```{r}
+check_self_crosses(dir)
+check_dead_strains(dir)
+check_query_sensitivity_to_drug(dir)
+plot_sm_data(dir)
+```
