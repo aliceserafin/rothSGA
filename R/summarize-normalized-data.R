@@ -9,20 +9,20 @@
 #' @export
 
 
-summarize_normalized_data <- function(sm_data, to = size_plate_norm){
+summarize_normalized_data <- function(sm_data, to = 'size_plate_norm'){
 
   assertthat::assert_that(assertthat::is.string(to))
 
   sm_data$to_tmp <- sm_data[[to]]
 
   sm_data %>%
-  group_by(plate_id, strain_name) %>%
-  mutate(
-         n                = n(to),
-         mean_size_norm   = mean(to),
-         median_size_norm = median(to),
-         sd_size_norm     = sd(to)
-  ) %>%
+    group_by(plate_id, strain_name) %>%
+    mutate(
+      n                = n(),
+      mean_size_norm   = mean(to_tmp),
+      median_size_norm = median(to_tmp),
+      sd_size_norm     = sd(to_tmp)
+    ) %>%
     ungroup()
 
 }

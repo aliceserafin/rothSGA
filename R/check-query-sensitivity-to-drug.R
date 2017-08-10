@@ -27,8 +27,11 @@ check_query_sensitivity_to_drug <- function(dir, spatial_normalized = TRUE) {
     value = 'size'
   }
 
+  bio_replicate_file <- read_csv('biological-replicate-annotation.csv')
+
 
   sm_data <- screenmill::read_screenmill(dir) %>%
+    left_join(bio_replicate_file) %>%
     mutate(
       # Make a numeric cisplatin variable by extracting the number between "-" and "uM"
       cisplatin = as.numeric(str_extract(treatment_id, '(?<=-).*(?=(uM))'))

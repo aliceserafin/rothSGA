@@ -17,7 +17,16 @@ check_self_crosses <- function(dir, untreated = 'CisPt-0uM'){
   assertthat::assert_that(assertthat::is.writeable(dir))
   assertthat::assert_that(assertthat::is.string(untreated))
 
-  sm_data <- screenmill::read_screenmill(dir)
+  bio_replicate_file <- read_csv('biological-replicate-annotation.csv')
+
+
+  sm_data <- screenmill::read_screenmill(dir) %>%
+    left_join(bio_replicate_file) %>%
+    mutate(
+      # Make a numeric cisplatin variable by extracting the number between "-" and "uM"
+      cisplatin = as.numeric(str_extract(treatment_id, '(?<=-).*(?=(uM))'))
+    )
+
 
   sm_data %>%
     filter(treatment_id == untreated) %>%

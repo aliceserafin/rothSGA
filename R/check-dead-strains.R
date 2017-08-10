@@ -14,8 +14,11 @@ check_dead_strains <- function(dir, death_tresh) {
   assertthat::assert_that(assertthat::is.writeable(dir))
   assertthat::assert_that(assertthat::is.number(death_thresh))
 
+  bio_replicate_file <- read_csv('biological-replicate-annotation.csv')
+
 
   sm_data <- screenmill::read_screenmill(dir) %>%
+    left_join(bio_replicate_file) %>%
     mutate(
       # Make a numeric cisplatin variable by extracting the number between "-" and "uM"
       cisplatin = as.numeric(str_extract(treatment_id, '(?<=-).*(?=(uM))'))

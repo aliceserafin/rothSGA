@@ -8,7 +8,7 @@
 #' @md
 #' @export
 
-apply_plate_normalization <- function(sm_data, to) {
+apply_plate_normalization <- function(sm_data, to = 'size') {
 
   assertthat::assert_that(assertthat::is.string(to))
 
