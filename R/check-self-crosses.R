@@ -17,7 +17,7 @@ check_self_crosses <- function(dir, untreated = 'CisPt-0uM'){
   assertthat::assert_that(assertthat::is.writeable(dir))
   assertthat::assert_that(assertthat::is.string(untreated))
 
-  bio_replicate_file <- read_csv(dir, 'biological-replicate-annotation.csv')
+  bio_replicate_file <- read_csv(file.path(dir, 'biological-replicate-annotation.csv'))
 
 
   sm_data <- screenmill::read_screenmill(dir) %>%
