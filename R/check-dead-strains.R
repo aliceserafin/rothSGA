@@ -9,12 +9,12 @@
 #' @export
 
 
-check_dead_strains <- function(dir, death_tresh) {
+check_dead_strains <- function(dir, death_thresh = 10) {
 
   assertthat::assert_that(assertthat::is.writeable(dir))
   assertthat::assert_that(assertthat::is.number(death_thresh))
 
-  bio_replicate_file <- read_csv('biological-replicate-annotation.csv')
+  bio_replicate_file <- read_csv(dir, 'biological-replicate-annotation.csv')
 
 
   sm_data <- screenmill::read_screenmill(dir) %>%
@@ -29,7 +29,7 @@ check_dead_strains <- function(dir, death_tresh) {
     summarise(
       mean_growth = mean(size[cisplatin == 0 & strain_name == 'vps33'])
     ) %>%
-    filter(mean_growth > 10 ) %>%
+    filter(mean_growth > death_thresh ) %>%
     write_csv('WARNING_mixed_array.csv')
 
 }
