@@ -11,8 +11,6 @@
 #'
 #' @param spatial_normalized Logical. Should the sensitivity check be done on spatially normalized data ? default is TRUE (see[rothSGA::apply_spatial_effect_normalization])
 #'
-#' @details
-#'
 #' @md
 #' @export
 
