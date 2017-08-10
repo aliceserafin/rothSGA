@@ -14,7 +14,7 @@ check_dead_strains <- function(dir, death_thresh = 10) {
   assertthat::assert_that(assertthat::is.writeable(dir))
   assertthat::assert_that(assertthat::is.number(death_thresh))
 
-  bio_replicate_file <- read_csv(dir, 'biological-replicate-annotation.csv')
+  bio_replicate_file <- read_csv(file.path(dir, 'biological-replicate-annotation.csv'))
 
 
   sm_data <- screenmill::read_screenmill(dir) %>%
