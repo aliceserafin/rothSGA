@@ -1,0 +1,10 @@
+query_id,query_name,query_annotation,control_query_id
+J1603,irc21,strains,J1801
+J1661,rad5,strains,J1801
+J1663,rad18,strains,J1801
+J1693,rad54,strains,J1801
+J1699,csm3,strains,J1801
+J1739,saw1,strains,J1801
+J1789,pif1,strains,J1801
+J1801,leu2,strains,J1801
+J1815,tdp1,strains,J1801
