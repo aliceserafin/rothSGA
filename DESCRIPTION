@@ -10,12 +10,13 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Suggests:
-	screenmill
+biocViews: Software, Genetics, FunctionalGenomics
 Imports:
-	tidyverse,
     assertthat,
     dplyr,
     readr,
     ggplot2,
     stringr
+Remotes:
+    github::EricEdwardBryant/screenmill
+    github::EricEdwardBryant/rothfreezer
