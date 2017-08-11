@@ -4,10 +4,12 @@
 \alias{add_biological_replicates}
 \title{Add biological replicate annotations}
 \usage{
-add_biological_replicates(dir, overwrite = FALSE)
+add_biological_replicates(dir, file, overwrite = FALSE)
 }
 \arguments{
 \item{dir}{Path to screenmill analysis directory}
+
+\item{file}{Name of resulting CSV file.}
 
 \item{overwrite}{A flag indicating whether to overwrite an existing biological replicate
 annotation file.}
