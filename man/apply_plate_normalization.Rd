@@ -4,7 +4,7 @@
 \alias{apply_plate_normalization}
 \title{Apply plate normalization}
 \usage{
-apply_plate_normalization(sm_data, to)
+apply_plate_normalization(sm_data, to = "size")
 }
 \arguments{
 \item{sm_data}{A screenmill dataset (see \link[screenmill:read_screenmill]{screenmill::read_screenmill})}

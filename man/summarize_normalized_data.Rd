@@ -4,7 +4,7 @@
 \alias{summarize_normalized_data}
 \title{Aggregates and summarizes technical replicates on the plate}
 \usage{
-summarize_normalized_data(sm_data, to = size_plate_norm)
+summarize_normalized_data(sm_data, to = "size_plate_norm")
 }
 \arguments{
 \item{sm_data}{A screenmill dataset (see \link[screenmill:read_screenmill]{screenmill::read_screenmill})}

@@ -5,7 +5,7 @@
 \title{Creates 'WARNING_mixed_array.csv' as an easy to read automated report of the problematic plates seemingly mixed or wrong or contaminated.
 vsp33 is absent from the array and should always be a blank spot.}
 \usage{
-check_dead_strains(dir, death_tresh)
+check_dead_strains(dir, death_thresh = 10)
 }
 \arguments{
 \item{dir}{A directory containing the screenmill data}
