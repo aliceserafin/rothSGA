@@ -20,3 +20,4 @@ Imports:
 Remotes:
     github::EricEdwardBryant/screenmill
     github::EricEdwardBryant/rothfreezer
+Suggests: testthat
