@@ -4,24 +4,32 @@ author: "{{{ author }}}"
 date: "{{{ date }}}"
 output: html_document
 params:
-  re_annotate: FALSE
+  dir: '{{{ data_dir }}}'
+  bio_rep_file: 'biological-replicate-annotation.csv'
+  processed_colonies_file: 'processed-colonies.csv'
+  processed_strains_file: 'processed-strains.csv' # aggregated technical replicates
+  re_annotate:  FALSE
   re_calibrate: FALSE
-  re_measure: FALSE
+  re_measure:   FALSE
   needs_review: TRUE  # Change me to FALSE after manual review
 ---
 
 ## Setup
 
 ```{r}
+library(tidyverse)
 library(rothSGA)
-dir = '{{{ data_dir }}}'
+dir = params$dir
+bio_rep_file            = file.path(dir, params$bio_rep_file)
+processed_colonies_file = file.path(dir, params$processed_colonies_file)
+processed_strains_file  = file.path(dir, params$processed_strains_file)
 ```
 
 ## Annotate Images
 
 ```{r}
 screenmill::annotate(dir, overwrite = params$re_annotate)
-add_biological_replicates(dir, file = 'biological-replicate-annotation.csv')
+add_biological_replicates(dir, file = bio_rep_file)
 ```
 
 ## Calibrate, measure, and review colonies
@@ -37,27 +45,41 @@ if (params$needs_review) screenmill::review(dir)
 ```{r}
 data_all <-
   screenmill::read_screenmill(dir) %>%
-  left_join(read_csv(file.path(dir, 'biological-replicate-annotation.csv'))) %>%
+  left_join(read_csv(bio_rep_file, col_types = cols()), by = c("plate_id", "query_name", "query_id", "group", "position")) %>%
+  exclude_large_colonies(thresh = 1.5) %>%
   normalize_spatial_effect(of = 'size', death_thresh = 0.25, prefix = 'size_') %>%
   normalize_plate_effect(of = 'size_spatial_norm', prefix = 'size_spatial_') %>%
-  plot_sm_data(path = )
+  write_csv(processed_colonies_file)
 
 data_bio_reps <-
-  group_by(plate_id, row, column) %>%
-  summarise(
-    n                = n(),            # exclusions have already been removed
-    mean_size_norm   = mean(size_spatial_plate_norm),
-    median_size_norm = median(size_spatial_plate_norm),
-    sd_size_norm     = sd(size_spatial_plate_norm)
+  data_all %>%
+  # Custom cisplatin annotation
+  mutate(cisplatin = as.numeric(stringr::str_extract(treatment_id, "(?<=-).*(?=(uM))"))) %>%
+  # Custom aggregation
+  group_by(
+    # Level of aggregation should identify each strain
+    plate_id, bio_replicate, plate, row, column,
+    # Other annotation features
+    date, hours_growth,
+    strain_collection_id, strain_id, gene_id, query_id, treatment_id,
+    strain_name, query_name, cisplatin
   ) %>%
-  ungroup() 
+  summarise(
+    n_tech             = n(), # exclusions have already been removed
+    plate_control_mean = mean(size_spatial_plate_effect),
+    mean_size_norm     = mean(size_spatial_plate_norm),
+    median_size_norm   = median(size_spatial_plate_norm),
+    sd_size_norm       = sd(size_spatial_plate_norm)
+  ) %>%
+  ungroup() %>%
+  write_csv(processed_strains_file)
 ```
 
 ## Quality control
 
 ```{r}
-check_self_crosses(dir)
-check_dead_strains(dir)
-check_query_sensitivity_to_drug(dir)
-plot_sm_data(dir)
+#check_self_crosses(dir)
+#check_dead_strains(dir)
+#check_query_sensitivity_to_drug(dir)
+#plot_sm_data(dir)
 ```
