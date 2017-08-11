@@ -3,6 +3,11 @@ title: "Batch report"
 author: "{{{ author }}}"
 date: "{{{ date }}}"
 output: html_document
+params:
+  re_annotate: FALSE
+  re_calibrate: FALSE
+  re_measure: FALSE
+  needs_review: TRUE  # Change me to FALSE after manual review
 ---
 
 ## Setup
@@ -15,30 +20,37 @@ dir = '{{{ data_dir }}}'
 ## Annotate Images
 
 ```{r}
-screenmill::annotate(dir)
-add_biological_replicates(dir)
+screenmill::annotate(dir, overwrite = params$re_annotate)
+add_biological_replicates(dir, file = 'biological-replicate-annotation.csv')
 ```
 
-## Calibrate, review, and quantify colonies
+## Calibrate, measure, and review colonies
 
 ```{r}
-screenmill::calibrate(dir)
-screenmill::review(dir)
-screenmill::measure(dir)
+screenmill::calibrate(dir, overwrite = params$re_calibrate)
+screenmill::measure(dir, overwrite = params$re_measure)
+if (params$needs_review) screenmill::review(dir)
 ```
 
 ## Apply normalizations
 
 ```{r}
-screenmill::read_screenmill(dir) %>%
-  apply_spatial_effect_normalization() %>%
-  apply_plate_normalization()
-```
+data_all <-
+  screenmill::read_screenmill(dir) %>%
+  left_join(read_csv(file.path(dir, 'biological-replicate-annotation.csv'))) %>%
+  normalize_spatial_effect(of = 'size', death_thresh = 0.25, prefix = 'size_') %>%
+  normalize_plate_effect(of = 'size_spatial_norm', prefix = 'size_spatial_') %>%
+  plot_sm_data(path = )
 
-## Aggregate and summarise technical replicates
-
-```{r}
-summarize_normalized_data()
+data_bio_reps <-
+  group_by(plate_id, row, column) %>%
+  summarise(
+    n                = n(),            # exclusions have already been removed
+    mean_size_norm   = mean(size_spatial_plate_norm),
+    median_size_norm = median(size_spatial_plate_norm),
+    sd_size_norm     = sd(size_spatial_plate_norm)
+  ) %>%
+  ungroup() 
 ```
 
 ## Quality control
