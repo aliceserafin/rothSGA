@@ -17,7 +17,4 @@ Imports:
     readr,
     ggplot2,
     stringr
-Remotes:
-    github::EricEdwardBryant/screenmill
-    github::EricEdwardBryant/rothfreezer
 Suggests: testthat
