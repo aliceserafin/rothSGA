@@ -1,0 +1,53 @@
+---
+title: "Batch report"
+author: "{{{ author }}}"
+date: "{{{ date }}}"
+output: html_document
+params:
+  dir: '{{{ data_dir }}}'
+  bio_rep_file: 'biological-replicate-annotation.csv'
+  processed_colonies_file: 'processed-colonies.csv'
+  processed_strains_file: 'processed-strains.csv' # aggregated technical replicates
+  notes: 'Notes.md'
+---
+
+##SETUP 
+
+```{r}
+library(tidyverse)
+library(rothSGA)
+dir = params$dir
+bio_rep_file            = file.path(dir, params$bio_rep_file)
+processed_colonies_file = file.path(dir, params$processed_colonies_file)
+processed_strains_file  = file.path(dir, params$processed_strains_file)
+```
+
+
+```{r child = params$notes }
+```
+
+## PLOTS GENERATED 
+
+```{r}
+plot_sm_data(params$processed_colonies_file, normalized = TRUE, path = params$dir)
+```
+
+## QUALITY CONTROLS
+
+# Self-crossing queries (mixed library strain, wrong query, diploid escape)
+
+```{r}
+rothSGA::check_self_crosses(params$dir)
+```
+
+# Blank spots not blank (contamination, mispinning)
+
+```{r}
+rothSGA::check_dead_strains(params$dir)
+```
+
+# Sensitivity to the drug
+
+```{r}
+rothSGA::check_query_sensitivity_to_drug(params$dir)
+```
