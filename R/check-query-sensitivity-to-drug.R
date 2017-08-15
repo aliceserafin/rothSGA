@@ -16,7 +16,7 @@
 
 
 
-check_query_sensitivity_to_drug22 <- function(dir, normalized = TRUE) {
+check_query_sensitivity_to_drug <- function(dir, normalized = TRUE) {
 
   assertthat::assert_that(assertthat::is.writeable(dir))
   assertthat::assert_that(assertthat::is.flag(normalized))
