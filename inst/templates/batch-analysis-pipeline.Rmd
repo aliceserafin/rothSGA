@@ -1,5 +1,5 @@
 ---
-title: "Batch report"
+title: "Batch processing"
 author: "{{{ author }}}"
 date: "{{{ date }}}"
 output: html_document

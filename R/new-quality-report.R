@@ -11,7 +11,7 @@
 #' @importFrom stringr str_replace_all fixed
 #' @export
 
-new_batch_report <- function(proj_dir = '.', data_dir = 'data', author = getOption('devtools.name')) {
+new_quality_report <- function(proj_dir = '.', data_dir = 'data', author = getOption('devtools.name')) {
   assertthat::assert_that(dir.exists(proj_dir), dir.exists(data_dir), assertthat::is.string(author %||% ''))
 
   read_lines(system.file('templates/quality-report.Rmd', package = 'rothSGA')) %>%
