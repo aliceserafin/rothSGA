@@ -16,25 +16,28 @@
 
 
 
-check_query_sensitivity_to_drug <- function(dir, spatial_normalized = TRUE) {
+check_query_sensitivity_to_drug22 <- function(dir, normalized = TRUE) {
 
   assertthat::assert_that(assertthat::is.writeable(dir))
-  assertthat::assert_that(assertthat::is.flag(spatial_normalized))
+  assertthat::assert_that(assertthat::is.flag(normalized))
 
-  if (spatial_normalized == TRUE) {
-    value = 'size_plate_norm'
+  if (normalized == TRUE) {
+    sm_data <- read_csv(file.path(dir, 'processed-colonies.csv'))
+    value = 'size_spatial_norm'
   } else {
+    sm_data <- screenmill::read_screenmill(dir)
     value = 'size'
   }
 
-  bio_replicate_file <- read_csv('biological-replicate-annotation.csv')
+  bio_replicate_file <- read_csv(file.path(dir, 'biological-replicate-annotation.csv'))
 
 
   sm_data <- screenmill::read_screenmill(dir) %>%
     left_join(bio_replicate_file) %>%
     mutate(
       # Make a numeric cisplatin variable by extracting the number between "-" and "uM"
-      cisplatin = as.numeric(str_extract(treatment_id, '(?<=-).*(?=(uM))'))
+      cisplatin = as.numeric(str_extract(treatment_id, '(?<=-).*(?=(uM))')),
+      WT = mean(value[cisplatin == 0 & strain_name == 'his3' & query_name == 'leu2'], trim = 0.2)
     )
 
   sm_data %>%
@@ -91,7 +94,7 @@ check_query_sensitivity_to_drug <- function(dir, spatial_normalized = TRUE) {
 
   write_csv(Drug_interaction, 'Query_sensitivity.csv')
 
-  return(Drug_interaction)
+  cat('query_sensitivity.csv file created in data directory !')
 
 
 }

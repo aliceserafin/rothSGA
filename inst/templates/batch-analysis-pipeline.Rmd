@@ -78,8 +78,7 @@ data_bio_reps <-
 ## Quality control
 
 ```{r}
-#check_self_crosses(dir)
-#check_dead_strains(dir)
-#check_query_sensitivity_to_drug(dir)
-#plot_sm_data(dir)
+new_quality_report(params$dir)
 ```
+
+Should be done with the quality-report.Rmd that has just been created

@@ -13,7 +13,8 @@ check_self_crosses(dir, untreated = "CisPt-0uM")
 \item{untreated}{The name of the untreated condition under the column treatment_id, default is 'CisPt-0uM' (see \link[screenmill:read_screenmill]{screenmill::read_screenmill}) (as a string)}
 }
 \description{
-creates 'WARNING_self_crossing.csv' as an easy to read automated report of the problematic crosses.
+Check for growth of the self-cross. Query strains and array strains K.O. at the same locus should not grow,
+because geneX::KanMX and geneX::NatMX cannot be both present in an haploid double mutant.
 }
 \details{
 This will only be applied to the untreated plates.
