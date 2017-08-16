@@ -14,13 +14,16 @@ params:
   needs_review: TRUE  # Change me to FALSE after manual review
 ---
 
+```{r include = FALSE}
+knitr::opts_chunk$set(message = FALSE)
+```
+
 ## Setup
 
 ```{r}
 library(tidyverse)
 library(rothSGA)
 dir = params$dir
-bio_rep_file            = file.path(dir, params$bio_rep_file)
 processed_colonies_file = file.path(dir, params$processed_colonies_file)
 processed_strains_file  = file.path(dir, params$processed_strains_file)
 ```
@@ -29,7 +32,7 @@ processed_strains_file  = file.path(dir, params$processed_strains_file)
 
 ```{r}
 screenmill::annotate(dir, overwrite = params$re_annotate)
-add_biological_replicates(dir, file = bio_rep_file)
+add_biological_replicates(dir, file = params$bio_rep_file)
 ```
 
 ## Calibrate, measure, and review colonies
@@ -75,10 +78,9 @@ data_bio_reps <-
   write_csv(processed_strains_file)
 ```
 
-## Quality control
+# Session
 
 ```{r}
-new_quality_report(params$dir)
+options(width = 90)
+devtools::session_info()
 ```
-
-Should be done with the quality-report.Rmd that has just been created
