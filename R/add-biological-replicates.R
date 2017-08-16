@@ -15,7 +15,7 @@
 #' @md
 #' @export
 
-add_biological_replicates <- function(dir, file, overwrite = FALSE) {
+add_biological_replicates <- function(dir, file = 'biological-replicate-annotation.csv', overwrite = FALSE) {
   anno_path <- file.path(dir, 'screenmill-annotations.csv')
   quer_path <- file.path(dir, 'screenmill-queries.csv')
 
@@ -27,13 +27,13 @@ add_biological_replicates <- function(dir, file, overwrite = FALSE) {
     assertthat::is.string(file)
   )
 
-  goal <- file.path(dir, 'biological-replicate-annotation.csv')
+  goal <- file.path(dir, file)
 
   # Biological replicates need to be manually entered into the following table
   if (!file.exists(goal) || overwrite) {
     anno    <- readr::read_csv(anno_path, col_types = cols_only(query_id = 'c', plate_id = 'c', group = 'i', position = 'i'))
     queries <- readr::read_csv(quer_path, col_types = cols_only(query_id = 'c', query_name = 'c'))
-    left_join(anno, queries) %>%
+    left_join(anno, queries, by = 'query_id') %>%
       mutate(bio_replicate = '') %>%
       select(plate_id, query_name, query_id, group, position, bio_replicate) %>%
       write_csv(goal)

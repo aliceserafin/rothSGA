@@ -4,7 +4,8 @@
 \alias{add_biological_replicates}
 \title{Add biological replicate annotations}
 \usage{
-add_biological_replicates(dir, file, overwrite = FALSE)
+add_biological_replicates(dir, file = "biological-replicate-annotation.csv",
+  overwrite = FALSE)
 }
 \arguments{
 \item{dir}{Path to screenmill analysis directory}
