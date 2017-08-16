@@ -32,5 +32,5 @@ new_quality_control <- function(proj_dir, data_dir, author) {
     str_replace_all(fixed('{{{ author }}}'),   author %||% '') %>%
     str_replace_all(fixed('{{{ data_dir }}}'), data_dir) %>%
     str_replace_all(fixed('{{{ date }}}'),     Sys.Date()) %>%
-    write_lines(file.path(proj_dir, 'quality-control.Rmd'))
+    write_lines(file.path(proj_dir, 'Quality-control.Rmd'))
 }
