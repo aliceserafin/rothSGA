@@ -27,7 +27,7 @@ new_batch_processing <- function(proj_dir, data_dir, author) {
     write_lines(file.path(proj_dir, 'Batch-processing.Rmd'))
 }
 
-new_quality_report <- function(proj_dir, data_dir, author) {
+new_quality_control <- function(proj_dir, data_dir, author) {
   read_lines(system.file('templates/quality-control.Rmd', package = 'rothSGA')) %>%
     str_replace_all(fixed('{{{ author }}}'),   author %||% '') %>%
     str_replace_all(fixed('{{{ data_dir }}}'), data_dir) %>%
