@@ -37,7 +37,7 @@ add_biological_replicates(dir, file = bio_rep_file)
 ```{r}
 screenmill::calibrate(dir, overwrite = params$re_calibrate)
 screenmill::measure(dir, overwrite = params$re_measure)
-if (params$needs_review) screenmill::review(dir)
+screenmill::review(dir, overwrite = params$needs_review)
 ```
 
 ## Apply normalizations
