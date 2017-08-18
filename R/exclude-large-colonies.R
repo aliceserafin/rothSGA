@@ -18,5 +18,5 @@ exclude_large_colonies <- function(sm_data, thresh) {
     group_by(query_id, bio_replicate, plate, row, column) %>%
     mutate(.exclude = any(.exclude)) %>%
     filter(!.exclude) %>%
-    select(-starts_with('[.]'))
+    select(-starts_with('.'))
 }
