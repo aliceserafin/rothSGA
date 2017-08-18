@@ -24,6 +24,7 @@ knitr::opts_chunk$set(message = FALSE)
 library(tidyverse)
 library(rothSGA)
 dir = params$dir
+bio_rep_file            = file.path(dir, params$bio_rep_file)
 processed_colonies_file = file.path(dir, params$processed_colonies_file)
 processed_strains_file  = file.path(dir, params$processed_strains_file)
 ```
