@@ -14,16 +14,15 @@ leave_one_out_mean <- function(x){
     xx <- data.frame(dist = x)
     dropped_min <- xx %>% filter(!dist == min(dist)) %>% summarize(mean = mean(dist), sd = sd(dist))
     dropped_max <- xx %>% filter(!dist == max(dist)) %>% summarize(mean = mean(dist), sd = sd(dist))
-  }
-
-  if (min(c(dropped_max$sd,dropped_min$sd)) < 0.9*sd(x)) {
-
     y <- rbind(dropped_min, dropped_max) %>% filter(sd == min(sd))
 
-    return(y$mean)
+    if (min(c(dropped_max$sd,dropped_min$sd)) < 0.9*sd(x)) {
+      return(y$mean)
+    } else {
+      return(mean(x))
+    }
 
-  } else
-  { return(mean(x))
+  } else {
+    return(mean(x))
   }
-
 }
