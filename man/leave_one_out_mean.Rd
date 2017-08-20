@@ -2,7 +2,7 @@
 % Please edit documentation in R/leave-one-out-mean.R
 \name{leave_one_out_mean}
 \alias{leave_one_out_mean}
-\title{Generic function that drops abberant values of small distribution}
+\title{Generic function that drops abberant values of small distribution (2<n<8) and returns a new median if it significantly reduces the sd}
 \usage{
 leave_one_out_mean(x)
 }
@@ -10,5 +10,5 @@ leave_one_out_mean(x)
 \item{x}{distribution (numeric vector)}
 }
 \description{
-Generic function that drops abberant values of small distribution
+Generic function that drops abberant values of small distribution (2<n<8) and returns a new median if it significantly reduces the sd
 }
