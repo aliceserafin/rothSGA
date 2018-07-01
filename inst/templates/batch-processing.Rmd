@@ -39,7 +39,7 @@ add_biological_replicates(dir, file = params$bio_rep_file)
 ## Calibrate, measure, and review colonies
 
 ```{r}
-screenmill::calibrate(dir, overwrite = params$re_calibrate)
+screenmill::calibrate(dir, overwrite = params$re_calibrate, grid_rows = 32, grid_cols = 48)
 screenmill::measure(dir, overwrite = params$re_measure)
 screenmill::review(dir, overwrite = params$needs_review)
 ```
