@@ -33,19 +33,19 @@ plot_sm_data <- function(sm_data, normalized = TRUE, path) {
     ggsave('figures/raw_plates_heatmaps.pdf', width = 10.8, height = 9.64)
 
 
-  queries <-
-    sm_data %>%
-    group_by(plate_id, query_name, cisplatin, bio_replicate) %>%
-    summarise(query = mean(size[strain_name == 'his3'], trim = 0.2)) %>%
-    ungroup()
+  #queries <-
+    #sm_data %>%
+    #group_by(plate_id, query_name, cisplatin, bio_replicate) %>%
+    #summarise(query = mean(size[strain_name == 'his3'], trim = 0.2)) %>%
+    #ungroup()
 
-  queries %>%
-    ggplot(aes(x = cisplatin, y = query, linetype = factor(bio_replicate), color = query_name)) +
-    geom_line() +
-    geom_point() +
-    facet_wrap(~query_name, ncol = 5) +
-    coord_cartesian(ylim = c(0, 130)) +
-    ggsave('figures/Queries_raw_growth.pdf', width = 10.2, height = 7.85)
+  #queries %>%
+    #ggplot(aes(x = cisplatin, y = query, linetype = factor(bio_replicate), color = query_name)) +
+    #geom_line() +
+    #geom_point() +
+    #facet_wrap(~query_name, ncol = 5) +
+    #coord_cartesian(ylim = c(0, 130)) +
+    #ggsave('figures/Queries_raw_growth.pdf', width = 10.2, height = 7.85)
 
 
   if (normalized == TRUE) {
@@ -53,7 +53,7 @@ plot_sm_data <- function(sm_data, normalized = TRUE, path) {
     # Spatial effect visualisation
 
     sm_data %>%
-      ggplot(aes(x= colony_col, y=colony_row, fill=spatial_effect)) +
+      ggplot(aes(x= colony_col, y=colony_row, fill=size_spatial_effect)) +
       geom_tile(color="white") +
       coord_fixed(expand = F) +
       facet_wrap(~ plate_id) +
@@ -79,12 +79,12 @@ plot_sm_data <- function(sm_data, normalized = TRUE, path) {
       ggsave('figures/spatially_normalized_plates.pdf', width = 10.8, height = 9.64)
 
     sm_data %>%
-      ggplot(aes(x= colony_col, y=colony_row, fill=size_plate_norm)) +
+      ggplot(aes(x= colony_col, y=colony_row, fill=size_spatial_plate_norm)) +
       geom_tile(color="white") +
       coord_fixed(expand = F) +
       facet_wrap(~ plate_id) +
       scale_y_reverse() +
-      scale_fill_gradient2(midpoint =  mean(results$size_plate_norm)) +
+      scale_fill_gradient2(midpoint =  mean(results$size_spatial_plate_norm)) +
       theme(
         panel.grid = element_blank(),
         panel.background = element_rect(fill = 'green')

@@ -27,7 +27,7 @@ check_self_crosses <- function(dir, untreated = 'CisPt-0uM'){
     )
 
   results <- sm_data %>%
-    filter(treatment_id == untreated) %>%
+    filter(treatment_id == 'CisPt-0uM') %>%
     group_by(query_name, bio_replicate) %>%
     summarise(mean_growth_self_cross = mean(size[strain_name == query_name])) %>%
     filter(mean_growth_self_cross > 25) #Self-cross definition
